@@ -1,7 +1,22 @@
-# Obsidian Links <!-- omit in toc -->
+# Obsidian Links Lite <!-- omit in toc -->
 
+A stripped-down personal fork of [mii-key/obsidian-links](https://github.com/mii-key/obsidian-links). Manipulate links in [Obsidian](https://obsidian.md).
 
-Manipulate links in [Obsidian](https://obsidian.md).
+## About this fork <!-- omit in toc -->
+
+Changes from upstream (see [CHANGELOG.md](CHANGELOG.md) for details):
+
+- **No context menu integration.** All commands are available from the command palette (Ctrl/Cmd+P) only. The "Context menu" settings section is gone. Any "Context menu: ..." references in the feature docs below no longer apply.
+- **No autolink features.** The "Convert to Autolink" and "Convert Autolinks to Markdown links" commands are removed. Existing `<https://...>` autolinks are still recognized and converted by "Convert all links to Markdown links".
+- **"Skip Frontmatter" actually works.** Upstream only applied it to "Convert Wikilinks to Markdown links", and only behind a hidden insider feature flag. This fork applies it to "Convert URLs to Markdown links" and "Convert all links to Markdown links" as well, and the plain **Skip Frontmatter** toggle in settings (on by default) is all that's needed.
+
+### Installation <!-- omit in toc -->
+
+Not in the community plugin store. Install via [BRAT](https://github.com/TfTHacker/obsidian42-brat): add beta plugin → `chadlipscomb/obsidian-links-lite`. Or manually: copy `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/chadlipscomb/obsidian-links-lite/releases) into `<vault>/.obsidian/plugins/links/`.
+
+---
+
+The remainder of this README is inherited from upstream; context-menu and autolink references no longer apply.
 
 - [Features](#features)
   - [Create](#create)
