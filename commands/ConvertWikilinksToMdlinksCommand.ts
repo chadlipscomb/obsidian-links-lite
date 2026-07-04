@@ -35,8 +35,7 @@ export class ConvertWikilinksToMdlinksCommand extends ConvertToMdlinkCommandBase
 			text = selection;
 		} else {
 			text = editor.getValue();
-			if (this.obsidianProxy.settings.ffSkipFrontmatterInNoteWideCommands
-				&& this.obsidianProxy.settings.skipFrontmatterInNoteWideCommands) {
+			if (this.obsidianProxy.settings.skipFrontmatterInNoteWideCommands) {
 				frontmatterToIgnore = getFrontmatter(text);
 			}
 		}

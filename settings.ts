@@ -22,7 +22,6 @@ export interface IObsidianLinksSettings {
 	ffObsidianUrlSupport: boolean;
 	ffHighlightBrokenLinks: boolean;
 	ffSetLinkDestinationFromClipbard: boolean;
-	ffSkipFrontmatterInNoteWideCommands: boolean;
 	ffCopyLinkToObject: boolean;
 
 	//context menu
@@ -80,7 +79,6 @@ export const DEFAULT_SETTINGS: IObsidianLinksSettings = {
 	ffObsidianUrlSupport: false,
 	ffHighlightBrokenLinks: false,
 	ffSetLinkDestinationFromClipbard: false,
-	ffSkipFrontmatterInNoteWideCommands: false,
 	ffCopyLinkToObject: false,
 
 	//context menu

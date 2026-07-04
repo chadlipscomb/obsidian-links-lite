@@ -6,7 +6,7 @@ import { ReplaceLinkModal } from 'ui/ReplaceLinkModal';
 import { ObsidianProxy } from 'commands/ObsidianProxy';
 import { DEFAULT_SETTINGS, IObsidianLinksSettings } from 'settings';
 import { ObsidianLinksSettingTab } from 'ObsidianLinksSettingTab';
-import { getContextMenuCommands, getPaletteCommands } from 'commands/Commands';
+import { getPaletteCommands } from 'commands/Commands';
 import { UiFactory } from 'ui/UiFactory';
 // import { MarkLinkState } from 'extensions/markLinkState';
 
@@ -138,48 +138,7 @@ export default class ObsidianLinksPlugin extends Plugin {
 			}
 		}
 
-		this.registerEvent(
-			this.app.workspace.on("editor-menu", (menu, editor, view) => {
-				const linkData = this.getLink(editor);
-				let addTopSeparator = function () {
-					menu.addSeparator();
-					addTopSeparator = function () { };
-				}
-
-				const commands = getContextMenuCommands(this.obsidianProxy, this.settings);
-				for (const cmd of commands) {
-					if (cmd == null) {
-						addTopSeparator();
-					} else {
-						if (cmd.handler(editor, true)) {
-							menu.addItem((item) => {
-								item
-									.setTitle(cmd.displayNameContextMenu)
-									.setIcon(cmd.icon)
-									.onClick(async () => {
-										cmd.handler(editor, false);
-									});
-							});
-						}
-					}
-				}
-
-				if (linkData) {
-					if (this.settings.ffReplaceLink && this.settings.contexMenu.replaceLink) {
-						menu.addItem((item) => {
-							item
-								.setTitle("Replace link")
-								.setIcon("pencil")
-								.onClick(async () => {
-									this.replaceExternalLink(linkData, editor);
-								});
-						});
-					}
-				}
-			})
-		);
-
-		//TODO: 
+		//TODO:
 		// this.registerEditorExtension(MarkLinkState);
 	}
 

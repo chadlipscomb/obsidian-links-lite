@@ -1,6 +1,6 @@
 import { Editor } from "obsidian";
 import { Func } from "./ICommand"
-import { LinkTypes, Position, findCodeBlocks, findLinks } from "../utils";
+import { LinkTypes, Position, TextPart, findCodeBlocks, findLinks, getFrontmatter } from "../utils";
 import { IObsidianProxy } from "./IObsidianProxy";
 import { ConvertToMdlinkCommandBase } from './ConvertToMdlinkCommandBase'
 
@@ -29,7 +29,16 @@ export class ConvertAllLinksToMdlinksCommand extends ConvertToMdlinkCommandBase 
 		}
 
 		const selection = editor.getSelection()
-		const text = selection || editor.getValue();
+		let frontmatterToIgnore: TextPart | null | undefined;
+		let text;
+		if (selection) {
+			text = selection;
+		} else {
+			text = editor.getValue();
+			if (this.obsidianProxy.settings.skipFrontmatterInNoteWideCommands) {
+				frontmatterToIgnore = getFrontmatter(text);
+			}
+		}
 		const links = findLinks(text);
 
 		//TODO: fix regex and move inside of findLinks
@@ -45,7 +54,8 @@ export class ConvertAllLinksToMdlinksCommand extends ConvertToMdlinkCommandBase 
 			return false;
 		}
 
-		const notMdlinks = links ? links.filter(x => x.type != LinkTypes.Markdown && !insideCodeBlock(x.position)) : []
+		const notMdlinks = links ? links.filter(x => x.type != LinkTypes.Markdown && !insideCodeBlock(x.position)
+			&& (frontmatterToIgnore ? x.position.start > frontmatterToIgnore.position.end : true)) : []
 
 		if (checking) {
 			return notMdlinks.length > 0

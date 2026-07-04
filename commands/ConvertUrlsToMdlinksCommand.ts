@@ -1,6 +1,6 @@
 import { Editor } from "obsidian";
 import { Func } from "./ICommand"
-import { LinkTypes, findLinks } from "../utils";
+import { LinkTypes, TextPart, findLinks, getFrontmatter } from "../utils";
 import { IObsidianProxy } from "./IObsidianProxy";
 import { ConvertToMdlinkCommandBase } from './ConvertToMdlinkCommandBase'
 
@@ -29,9 +29,19 @@ export class ConvertUrlsToMdlinksCommand extends ConvertToMdlinkCommandBase {
 		}
 
 		const selection = editor.getSelection()
-		const text = selection || editor.getValue();
+		let frontmatterToIgnore: TextPart | null | undefined;
+		let text;
+		if (selection) {
+			text = selection;
+		} else {
+			text = editor.getValue();
+			if (this.obsidianProxy.settings.skipFrontmatterInNoteWideCommands) {
+				frontmatterToIgnore = getFrontmatter(text);
+			}
+		}
 		const links = findLinks(text);
-		const urls = links ? links.filter(x => x.type == LinkTypes.PlainUrl) : []
+		const urls = links ? links.filter(x => x.type == LinkTypes.PlainUrl
+			&& (frontmatterToIgnore ? x.position.start > frontmatterToIgnore.position.end : true)) : []
 
 		if (checking) {
 			return urls.length > 0

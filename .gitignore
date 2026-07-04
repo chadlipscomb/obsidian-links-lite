@@ -25,3 +25,5 @@ data.json
 .DS_Store
 
 .obsidian/
+# claude code hook logs
+logs/
