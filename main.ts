@@ -96,7 +96,12 @@ export default class ObsidianLinksPlugin extends Plugin {
 				id: cmd.id,
 				name: cmd.displayNameCommand,
 				icon: cmd.icon,
-				editorCheckCallback: (checking, editor, ctx) => cmd.handler(editor, checking)
+				editorCheckCallback: (checking, editor, ctx) => {
+					if (this.settings.paletteCommands[cmd.id] === false) {
+						return false;
+					}
+					return cmd.handler(editor, checking);
+				}
 			});
 		}
 
@@ -150,6 +155,7 @@ export default class ObsidianLinksPlugin extends Plugin {
 		const loadedSettings = await this.loadData();
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, loadedSettings);
 		this.settings.contexMenu = Object.assign({}, DEFAULT_SETTINGS.contexMenu, loadedSettings?.contexMenu);
+		this.settings.paletteCommands = Object.assign({}, loadedSettings?.paletteCommands);
 		this.linkTextSuggestContext.titleSeparator = this.settings.titleSeparator;
 	}
 

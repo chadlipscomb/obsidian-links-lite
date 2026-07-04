@@ -14,6 +14,9 @@ export interface IObsidianLinksSettings {
 	autoselectWordOnCreateLink: boolean;
 	skipFrontmatterInNoteWideCommands: boolean;
 
+	// command palette; commands missing from the map are enabled
+	paletteCommands: Record<string, boolean>;
+
 	// feature flags
 	ffReplaceLink: boolean;
 	ffExtractSection: boolean;
@@ -70,6 +73,8 @@ export const DEFAULT_SETTINGS: IObsidianLinksSettings = {
 	onConvertToMdlinkAppendMdExtension: false,
 	autoselectWordOnCreateLink: true,
 	skipFrontmatterInNoteWideCommands: true,
+
+	paletteCommands: {},
 
 	//feature flags
 	ffReplaceLink: false,

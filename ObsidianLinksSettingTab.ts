@@ -1,6 +1,7 @@
 import ObsidianLinksPlugin from "main";
 import { App, PluginSettingTab, setIcon, Setting } from "obsidian";
 import { InternalWikilinkWithoutTextAction } from "utils";
+import { getPaletteCommands } from "commands/Commands";
 
 export class ObsidianLinksSettingTab extends PluginSettingTab {
 
@@ -139,6 +140,25 @@ export class ObsidianLinksSettingTab extends PluginSettingTab {
             });
         this.setSettingHelpLink(settingAppendMdExtension, this.getFullDocUrl('convert-to-markdown-link'));
 
+        // ----------------------------------------------
+        // --           Command palette                --
+        // ----------------------------------------------
+
+        containerEl.createEl('h3', { text: 'Command palette' });
+        containerEl.createEl('p', { text: 'Choose which commands appear in the command palette. Changes take effect immediately.' });
+
+        for (const cmd of getPaletteCommands(this.plugin.obsidianProxy, this.plugin.settings)) {
+            new Setting(containerEl)
+                .setName(cmd.displayNameCommand)
+                .addToggle((toggle) => {
+                    toggle
+                        .setValue(this.plugin.settings.paletteCommands[cmd.id] !== false)
+                        .onChange(async (value) => {
+                            this.plugin.settings.paletteCommands[cmd.id] = value;
+                            await this.plugin.saveSettings();
+                        })
+                });
+        }
 
         // ----------------------------------------------
         // --          Early access features           --

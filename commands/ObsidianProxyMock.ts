@@ -109,6 +109,7 @@ export class ObsidianProxyMock {
         onConvertToMdlinkAppendMdExtension: false,
         autoselectWordOnCreateLink: false,
         skipFrontmatterInNoteWideCommands: true,
+        paletteCommands: {},
 
         //feature flags
         ffReplaceLink: true,

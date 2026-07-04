@@ -2,6 +2,12 @@
 
 Fork of [mii-key/obsidian-links](https://github.com/mii-key/obsidian-links), forked at upstream version 1.17.51.
 
+## 1.17.52 (fork, 2026-07-04)
+
+### Added
+
+- **Command palette toggles.** New "Command palette" section in settings with an on/off toggle for every command. Disabled commands disappear from the palette immediately; missing entries default to enabled.
+
 ## 1.17.51 (fork, 2026-07-04)
 
 First release of the stripped-down fork.
